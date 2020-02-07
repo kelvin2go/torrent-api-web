@@ -1,0 +1,132 @@
+<template>
+  <div class="text-center">
+    <v-dialog
+      v-model="dialog"
+      width="500"
+      v-if="!$auth.loggedIn"
+    >
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="red lighten-2"
+          dark
+          v-on="on"
+        >
+          Login
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-title
+          class="headline grey lighten-2"
+          primary-title
+        >
+          Login
+        </v-card-title>
+
+        <v-card-text>
+          <v-form
+            ref="form"
+            v-model="valid"
+          >
+
+            <v-text-field
+              v-model="form.identifier"
+              :rules="emailRules"
+              label="E-mail"
+              required
+            ></v-text-field>
+
+            <v-text-field
+              v-model="form.password"
+              :rules="requiredRules"
+              label="Password"
+              :type="show1 ? 'text' : 'password'"
+              :append-icon="show1 ? 'visibility_off' : 'visibility'"
+              @click:append="show1 = !show1"
+              required
+            ></v-text-field>
+
+          </v-form>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="grey"
+            text
+            @click="dialog = false"
+          >
+            cancel
+          </v-btn>
+          <v-btn
+            color="primary"
+            text
+            @click="login"
+          >
+            Login
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <div v-else>
+      {{$auth.user.username}}
+    </div>
+  </div>
+</template>
+
+
+<script>
+const API_URL = process.env.API_URL
+export default {
+  data: () => ({
+    valid: true,
+    dialog: false,
+    email: '',
+    requiredRules: [v => !!v || 'password is required'],
+    emailRules: [
+      v => !!v || 'E-mail is required',
+      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+    ],
+    select: null,
+    form: {
+      identifier: '',
+      password: ''
+    },
+    show1: false,
+
+  }),
+
+  methods: {
+    validate () {
+      if (this.$refs.form.validate()) {
+        this.snackbar = true
+      }
+    },
+    reset () {
+      this.$refs.form.reset()
+    },
+    resetValidation () {
+      this.$refs.form.resetValidation()
+    },
+    login () {
+      this.loading = true
+      this.error = {}
+      const that = this
+
+      // const { data } = await this.$axios.post(`${API_URL}/auth/local`, this.form)
+      this.$auth.loginWith('local', {
+        data: this.form
+      }).then(function (data) {
+        that.$router.push('/movie')
+      }).catch(err => {
+        console.log(err)
+      }).finally(() => {
+        that.loading = false
+      })
+
+    },
+  },
+}
+</script>

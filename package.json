@@ -1,0 +1,28 @@
+{
+  "name": "torrent-player",
+  "version": "1.0.0",
+  "description": "web torrent player + search torrent",
+  "author": "Kelvin Kwong Ho",
+  "private": true,
+  "scripts": {
+    "dev": "export `cat .env/.env-dev` && nuxt -p 3333",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "clean": "rm -rf node_modules .nuxt yarn.lock"
+  },
+  "dependencies": {
+    "@nuxtjs/auth": "^4.8.5",
+    "@nuxtjs/axios": "^5.9.5",
+    "nuxt": "^2.0.0",
+    "nuxt-socket-io": "^1.0.15",
+    "vue-magnet": "^2.0.4",
+    "webtorrent": "^0.107.17",
+    "webtorrent-hybrid": "^4.0.1"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.0.0",
+    "fs": "^0.0.1-security",
+    "material-design-icons-iconfont": "^5.0.1"
+  }
+}

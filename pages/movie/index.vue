@@ -65,6 +65,7 @@
           :headers="headers"
           :items="movies"
           hide-default-footer
+          :loading="loading"
           class="elevation-1"
           style="min-height:500px"
         >
@@ -228,8 +229,14 @@ export default {
         })
       }
     },
+    clear () {
+      this.movies = []
+      this.movieInfo = null
+    },
     async search () {
       this.loading = true
+      this.movies = []
+      this.movieInfo = null
       try {
         const params = {
           ...this.form,

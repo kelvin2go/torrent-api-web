@@ -15,35 +15,45 @@
       </div>
       <v-card>
         <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
+          Welcome to the Webtor
         </v-card-title>
         <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
+          <p> Webtor is a torrent search for movie and cloud download on self hosting server</p>
           <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
+            <a
+              href="./movie"
               target="_blank"
             >
-              documentation
-            </a>.
+              Start
+            </a>
           </p>
           <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
+            This project using <a
+              href="https://github.com/JimmyLaurent/torrent-search-api"
               target="_blank"
-              title="chat"
             >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
+              Torrent search api
+            </a> <a
+              href="https://github.com/webtorrent/webtorrent"
               target="_blank"
-              title="contribute"
             >
-              issue board
-            </a>.
+              Web torrent
+            </a>
+
+            API server: strapi <a
+              href="https://github.com/webtorrent/webtorrent"
+              target="_blank"
+            >
+              Strapi
+            </a>
+
+            Web view <a
+              href="https://github.com/kelvin2go/torrent-api-web"
+              target="_blank"
+            >
+              NuxtJS + vuejs
+            </a>
+
           </p>
           <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
           <div class="text-xs-right">

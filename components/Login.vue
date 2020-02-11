@@ -2,12 +2,11 @@
   <div class="text-center">
     <v-dialog
       v-model="dialog"
-      width="500"
       v-if="!$auth.loggedIn"
     >
       <template v-slot:activator="{ on }">
         <v-btn
-          color="red lighten-2"
+          color="primary lighten-2"
           dark
           v-on="on"
         >
@@ -95,9 +94,15 @@ export default {
       password: ''
     },
     show1: false,
-
+    socket1: null,
   }),
-
+  mounted () {
+    this.socket1 = this.$nuxtSocket({ // In our example above, since vuex opts are set for 'home', they will be used. (see computed props)
+      name: 'home', // If left blank, module will search for the socket you specified as the default
+      channel: '/index',
+      reconnection: false
+    })
+  },
   methods: {
     validate () {
       if (this.$refs.form.validate()) {

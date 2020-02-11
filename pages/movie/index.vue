@@ -51,7 +51,7 @@
         md4
         v-if="movieInfo"
       >
-        <MovieCard :movie="movieInfo" />
+        <MovieCard :movie="movieInfo.info" />
       </v-flex>
       <v-flex
         xs10
@@ -181,9 +181,18 @@ export default {
     }
     // const { data } = await this.$axios.get(`${API_URL}/torrent/activeProviders`)
     // this.providers = data
+    this.socket1 = this.$nuxtSocket({ // In our example above, since vuex opts are set for 'home', they will be used. (see computed props)
+      name: 'home', // If left blank, module will search for the socket you specified as the default
+      channel: '/index',
+      reconnection: false
+    })
   },
-
   methods: {
+    getMessage () {
+      this.socket1.emit('getMovie', { id: 'helloid' }, (resp) => {
+        this.messageRxd = resp
+      })
+    },
     async remoteDownload (torrentId) {
       this.loading = true
       try {

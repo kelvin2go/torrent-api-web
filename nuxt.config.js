@@ -1,6 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
-const API_BASE_URL = process.env.API_URL
+const API_BASE_URL = process.env.API_URL || 'http://localhost:1337'
 export default {
   mode: 'spa',
   /*
@@ -53,6 +53,16 @@ export default {
     '@nuxtjs/auth',
     'nuxt-socket-io',
   ],
+  io: {
+    sockets: [
+      {
+        name: 'movies',
+        url: `${API_BASE_URL}`,
+        default: true,
+      },
+
+    ]
+  },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module

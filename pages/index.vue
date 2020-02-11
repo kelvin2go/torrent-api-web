@@ -10,8 +10,6 @@
       md6
     >
       <div class="text-center">
-        <logo />
-        <vuetify-logo />
       </div>
       <v-card>
         <v-card-title class="headline">
@@ -27,27 +25,30 @@
               Start
             </a>
           </p>
+          <br />
           <p>
-            This project using <a
+            This project is based on: <br />
+            <a
               href="https://github.com/JimmyLaurent/torrent-search-api"
               target="_blank"
             >
               Torrent search api
-            </a> <a
+            </a> <br />
+            <a
               href="https://github.com/webtorrent/webtorrent"
               target="_blank"
             >
               Web torrent
-            </a>
+            </a><br /><br />
 
-            API server: strapi <a
+            API server: Strapi <a
               href="https://github.com/webtorrent/webtorrent"
               target="_blank"
             >
               Strapi
             </a>
-
-            Web view <a
+            <br />
+            Web view: <a
               href="https://github.com/kelvin2go/torrent-api-web"
               target="_blank"
             >
@@ -55,31 +56,13 @@
             </a>
 
           </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-          >
-            Nuxt GitHub
-          </a>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <v-btn
             color="primary"
             nuxt
-            to="/inspire"
+            to="/movie"
           >
             Continue
           </v-btn>
@@ -90,13 +73,9 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
 export default {
   components: {
-    Logo,
-    VuetifyLogo
   }
 }
 </script>

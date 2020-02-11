@@ -94,16 +94,15 @@ export default {
       password: ''
     },
     show1: false,
-    socket1: null,
   }),
   mounted () {
-    this.socket1 = this.$nuxtSocket({ // In our example above, since vuex opts are set for 'home', they will be used. (see computed props)
-      name: 'home', // If left blank, module will search for the socket you specified as the default
-      channel: '/index',
-      reconnection: false
-    })
   },
   methods: {
+    getMessage () {
+      this.socket1.emit('getMovie', { id: 'helloid' }, (resp) => {
+        this.messageRxd = resp
+      })
+    },
     validate () {
       if (this.$refs.form.validate()) {
         this.snackbar = true

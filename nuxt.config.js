@@ -1,6 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
 const API_BASE_URL = process.env.API_URL || 'http://localhost:1337'
+console.log(API_BASE_URL)
 export default {
   mode: 'spa',
   /*
@@ -57,7 +58,7 @@ export default {
     sockets: [
       {
         name: 'movies',
-        url: `${API_BASE_URL}`,
+        url: `${API_BASE_URL}/`,
         default: true,
       },
 

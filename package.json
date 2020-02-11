@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "export `cat .env/.env-dev` && nuxt -p 3333",
-    "build": "nuxt build",
-    "start": "nuxt start",
+    "build": "export `cat .env/.env-prod` && nuxt build",
+    "start": "export `cat .env/.env-prod` && nuxt start",
     "generate": "nuxt generate",
     "clean": "rm -rf node_modules .nuxt yarn.lock"
   },

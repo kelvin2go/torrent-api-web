@@ -8,6 +8,7 @@
     "dev": "export `cat .env/.env-dev` && nuxt -p 3333",
     "build": "export `cat .env/.env-prod` && nuxt build",
     "start": "export `cat .env/.env-prod` && nuxt start",
+    "pm2": "pm2 start --name 'web' 'yarn start'",
     "generate": "nuxt generate",
     "clean": "rm -rf node_modules .nuxt yarn.lock"
   },

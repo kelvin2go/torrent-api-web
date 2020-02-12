@@ -69,7 +69,11 @@
           class="elevation-1"
           style="min-height:500px"
         >
-
+          <template v-slot:item.status="{item}">
+            <div class="floatbox">
+              {{item.status }} {{ item.status == 'downloading' ? `${item.percent}%` : '' }}
+            </div>
+          </template>
           <template v-slot:item.actions="{item}">
             <div class="floatbox">
               <v-btn
@@ -156,6 +160,12 @@ export default {
         //   sortable: false,
         //   value: 'magnet',
         // },
+        {
+          text: 'status',
+          align: 'left',
+          sortable: false,
+          value: 'status',
+        },
         {
           text: '',
           align: 'left',

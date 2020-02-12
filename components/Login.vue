@@ -3,6 +3,8 @@
     <v-dialog
       v-model="dialog"
       v-if="!$auth.loggedIn"
+      max-width="500px"
+      dark
     >
       <template v-slot:activator="{ on }">
         <v-btn

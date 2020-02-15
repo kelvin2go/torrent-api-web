@@ -208,8 +208,7 @@ export default {
       console.log('hello')
       this.socket1.emit('movies', { id: 'helloid' }, (resp) => {
         this.messageRxd = resp
-      })
-        .on('hell', data => console.log(data))
+      }).on('hell', data => console.log(data))
     },
     async remoteDownload (torrentId) {
       this.loading = true

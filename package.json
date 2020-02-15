@@ -16,10 +16,7 @@
     "@nuxtjs/auth": "^4.8.5",
     "@nuxtjs/axios": "^5.9.5",
     "nuxt": "^2.0.0",
-    "nuxt-socket-io": "^1.0.15",
-    "vue-magnet": "^2.0.4",
-    "webtorrent": "^0.107.17",
-    "webtorrent-hybrid": "^4.0.1"
+    "nuxt-socket-io": "^1.0.15"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0",

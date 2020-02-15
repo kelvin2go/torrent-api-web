@@ -100,14 +100,14 @@
 </template>
 
 <script>
-import WebTorrent from 'webtorrent-hybrid'
 import MovieCard from '@/components/MovieCard'
-const WT = new WebTorrent()
+import SocketStatus from 'nuxt-socket-io'
 const API_URL = process.env.API_URL
 
 export default {
   components: {
-    MovieCard
+    MovieCard,
+    SocketStatus
   },
   name: 'movieIndex',
   props: ['inKeyword'],
@@ -128,7 +128,6 @@ export default {
       file: null,
       providers: [],
       downloadedFile: {},
-      WebTorrent: WT,
       headers: [
         {
           text: 'Title',
@@ -174,7 +173,10 @@ export default {
         }
       ],
       movieInfo: null,
-      socket1: null
+      socket1: null,
+      socketStatus: {},
+      badStatus: {},
+      myEmitErrors: null,
     };
   },
   computed: {
@@ -194,16 +196,20 @@ export default {
     // const { data } = await this.$axios.get(`${API_URL}/torrent/activeProviders`)
     // this.providers = data
     this.socket1 = this.$nuxtSocket({ // In our example above, since vuex opts are set for 'home', they will be used. (see computed props)
-      channel: this.$auth.user.id,
-      reconnection: false
+      channel: '/hello',
+      name: 'connection',
+      reconnection: false,
+      emitErrorsProp: 'myEmitErrors'
     })
     this.socket1.on('hello', (res) => console.log(res));
   },
   methods: {
     getMessage () {
-      this.socket1.emit('getMovie', { id: 'helloid' }, (resp) => {
+      console.log('hello')
+      this.socket1.emit('movies', { id: 'helloid' }, (resp) => {
         this.messageRxd = resp
       })
+        .on('hell', data => console.log(data))
     },
     async remoteDownload (torrentId) {
       this.loading = true
@@ -224,32 +230,7 @@ export default {
         this.loading = false
       }
     },
-    async pickMagnet ({ index, movie }) {
-      console.log(movie)
-      const magnet = movie.hasOwnProperty('magnet') ? movie.magnet.replace('magnet:?', '') : ''
-      this.$router.push(`/movie/play/${encodeURIComponent(movie.magnet)}`)
-    },
-    async downloadTorrent (torrentId) {
-      // Download the torrent
-      console.log(torrentId)
-      if (this.downloadedFile.hasOwnProperty(torrentId)) {
-        this.downloadedFile[torrentId].file.renderTo('video#player')
-      } else {
-        console.log('a')
-        WT.add(torrentId, function (torrent) {
-          // Torrents can contain many files. Let's use the .mp4 file
-          console.log('bn', torrent)
-          var file = torrent.files.find(function (file) {
-            console.log(file.name)
-            return file.name.endsWith('.mp4') || file.name.endsWith('.avi') || file.name.endsWith('.mpeg')
-          })
-          console.log('c', file)
-          // Display the file by adding it to the DOM.
-          // Supports video, audio, image files, and more!
-          file.appendTo('#test')
-        })
-      }
-    },
+
     clear () {
       this.movies = []
       this.movieInfo = null

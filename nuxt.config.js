@@ -35,9 +35,10 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
+  router: { middleware: ['auth'] },
   plugins: [
     '~/plugins/vuetify.js',
-    '~/plugins/vuemagnet.js'
+    // '~/plugins/vuemagnet.js'
     // '~/plugins/webtorrent.js',
   ],
   /*
@@ -57,13 +58,14 @@ export default {
   io: {
     sockets: [
       {
-        name: 'movies',
+        name: 'connection',
+        channel: 'connection',
         url: `${API_BASE_URL}/`,
         default: true,
       },
-
     ]
   },
+
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
@@ -136,13 +138,6 @@ export default {
         })
 
       }
-
-      // config.plugins.unshift(new LodashModuleReplacementPlugin({
-      //   shorthands: true
-      // }))
-      // // rules[2].use[0] is babel-loader
-      // config.module.rules[2].use[0].options.plugins = ['lodash']
-
     },
     render: {
       http2: {

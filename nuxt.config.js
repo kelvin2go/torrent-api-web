@@ -104,7 +104,8 @@ export default {
     }
   },
   env: {
-    API_URL: API_BASE_URL || 'http://localhost:1337'
+    API_URL: API_BASE_URL || 'http://localhost:1337',
+    TMDB_IMG_BASE: process.env.TMDB_IMG_BASE || `https://image.tmdb.org/t/p/w500/`
   },
   /*
   ** Build configuration

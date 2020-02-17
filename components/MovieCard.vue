@@ -69,13 +69,13 @@
       </v-chip-group> -->
     <!-- </v-card-text> -->
 
-    <v-card-actions>
-      <!-- <v-btn
+    <!--  <v-card-actions> -->
+    <!-- <v-btn
         color="deep-purple accent-4"
         text
       >
       </v-btn> -->
-    </v-card-actions>
+    <!-- </v-card-actions> -->
   </v-card>
 </template>
 

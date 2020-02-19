@@ -5,8 +5,9 @@
     max-width="374"
   >
     <v-img
-      height="250"
+      height="513"
       :src="movie.poster"
+      max-height="513"
     ></v-img>
 
     <v-card-title>{{movie.title}}</v-card-title>
@@ -17,7 +18,7 @@
         class="mx-0"
       >
         <v-rating
-          :value="Number(movie.vote_average)"
+          :value="Number(movie.vote_average / 2)"
           color="amber"
           dense
           half-increments
@@ -25,7 +26,7 @@
           size="14"
         ></v-rating>
 
-        <div class="grey--text ml-4">{{movie.vote_count}} votes</div>
+        <div class="grey--text ml-4">{{movie.vote_average}} ({{movie.vote_count}})</div>
       </v-row>
 
       <div class="my-4 subtitle-1">

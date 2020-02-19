@@ -1,6 +1,6 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer
+  <v-app white>
+    <!-- <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -23,13 +23,13 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
     <v-app-bar
       :clipped-left="clipped"
       fixed
       app
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
       <!-- <v-btn
         icon
         @click.stop="miniVariant = !miniVariant"
@@ -48,7 +48,14 @@
       >
         <v-icon>mdi-minus</v-icon>
       </v-btn> -->
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title>
+        <nuxt-link to="/">
+          <img
+            style="height: 68px;"
+            src="~/assets/torrunx.png"
+          />
+        </nuxt-link>
+      </v-toolbar-title>
       <v-spacer />
       <v-list>
         <v-list-item>

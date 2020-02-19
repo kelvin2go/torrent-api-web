@@ -73,6 +73,29 @@
     </v-dialog>
     <div v-else>
       {{$auth.user.username}}
+      <!-- <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            dark
+            icon
+            v-on="on"
+            stylue="height: 64px;"
+          >
+             <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item>
+            <v-list-item-title>
+              <a
+                href="#"
+                @click="$auth.logout"
+              > LOGOUT</a> 
+      </v-list-item-title>
+      </v-list-item>
+      </v-list>
+      </v-menu> -->
     </div>
   </div>
 </template>

@@ -141,12 +141,12 @@ export default {
           sortable: false,
           value: 'size',
         },
-        {
-          text: 'Provider',
-          align: 'left',
-          sortable: false,
-          value: 'provider',
-        },
+        // {
+        //   text: 'Provider',
+        //   align: 'left',
+        //   sortable: false,
+        //   value: 'provider',
+        // },
         {
           text: 'Time',
           align: 'left',

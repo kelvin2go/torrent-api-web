@@ -10,11 +10,12 @@
       md6
     >
       <v-container fluid>
+
         <v-row dense>
           <v-col
             v-for="movie in popMovie"
             :key="`movie-${movie.id}`"
-            :cols="4"
+            :cols="3"
           >
             <nuxt-link :to="`/movie/search/${movie.title}`">
               <MovieCardTMDB :movie="movie" />
@@ -110,7 +111,7 @@ export default {
           this.popMovie = data.list.map(x => {
             return {
               ...x,
-              poster: `${process.env.TMDB_IMG_BASE}${x.poster_path}`,
+              poster: `${process.env.TMDB_IMG_BASE}w342${x.poster_path}`,
             }
           })
         }

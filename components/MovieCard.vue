@@ -17,7 +17,7 @@
         class="mx-0"
       >
         <v-rating
-          :value="Number(movie.imdbRating)"
+          :value="Number(movie.imdbRating / 2)"
           color="amber"
           dense
           half-increments

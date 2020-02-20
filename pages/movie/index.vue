@@ -177,6 +177,8 @@ export default {
       socketStatus: {},
       badStatus: {},
       myEmitErrors: null,
+      timer: null,
+      lastTorrentId: null
     };
   },
   computed: {
@@ -187,6 +189,7 @@ export default {
       }
       return null
     },
+
   },
   async mounted () {
     if (this.inKeyword) {
@@ -203,7 +206,34 @@ export default {
     })
     this.socket1.on('hello', (res) => console.log(res));
   },
+  beforeDestroy () {
+    if (this.timer) window.clearInterval(this.timer)
+  },
   methods: {
+    async getTorrent () {
+      const params = {
+        ...this.form,
+      }
+      const { data } = await this.$axios.get(`${API_URL}/torrent`, { params })
+      console.log(data)
+
+      this.searchResults = data
+      if (data && data.torrent_count) {
+        this.movies = data.movies
+
+        this.movies.map(x => {
+          if (this.lastTorrentId && x.magnet == this.lastTorrentId && x.status == 'done') {
+            window.clearInterval(this.timer)
+            this.timer = null
+          }
+        })
+      }
+    },
+    backgroundUpdate () {
+      if (!this.timer) {
+        this.timer = window.setInterval(async () => await this.getTorrent(), 5000)
+      }
+    },
     getMessage () {
       console.log('hello')
       this.socket1.emit('movies', { id: 'helloid' }, (resp) => {
@@ -213,6 +243,7 @@ export default {
     async remoteDownload (torrentId) {
       this.loading = true
       try {
+        this.lastTorrentId = torrentId
         const params = {
           torrentId,
         }
@@ -222,6 +253,8 @@ export default {
         if (data && data.torrent_count) {
           this.movies = data.movies
         }
+
+        this.backgroundUpdate(torrentId)
       }
       catch (err) {
         console.log(err)

@@ -3,7 +3,7 @@
   <v-card
     class="mx-auto elevation-20"
     dark
-    style="min-width: 490px;"
+    style="min-width: 95%;"
   >
     <v-row justify="space-between">
       <v-col cols="8">

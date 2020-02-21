@@ -94,7 +94,7 @@
           </template>
         </v-data-table>
       </v-flex>
-      <v-btn @click="getMessage"> socket</v-btn>
+      <!-- <v-btn @click="getMessage"> socket</v-btn> -->
     </v-row>
   </v-layout>
 </template>

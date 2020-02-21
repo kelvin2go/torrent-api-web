@@ -1,5 +1,8 @@
 <template>
-  <v-app white>
+  <v-app
+    white
+    :class="`lay-cover ${$vuetify.breakpoint.name}`"
+  >
     <v-app-bar
       :clipped-left="clipped"
       fixed
@@ -14,7 +17,7 @@
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer />
-      <v-list>
+      <v-list style="padding: 4px;">
         <v-list-item>
           <v-list-item-action>
             <LOGIN />
@@ -58,6 +61,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
+      breakpoint: this.$vuetify.breakpoint
     }
   }
 }
@@ -72,5 +76,8 @@ a {
 #__nuxt {
   background-color: black;
   height: 140vw;
+}
+body {
+  background-color: black;
 }
 </style>

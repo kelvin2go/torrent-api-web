@@ -1,5 +1,8 @@
 <template>
-  <v-app white>
+  <v-app
+    white
+    :class="`lay-cover ${$vuetify.breakpoint.xs || $vuetify.breakpoint.sm || $vuetify.breakpoint.md ? 'mini': 'normal' }`"
+  >
     <!-- <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -57,7 +60,7 @@
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer />
-      <v-list>
+      <v-list style="padding: 4px;">
         <v-list-item>
           <v-list-item-action>
             <LOGIN />
@@ -122,5 +125,8 @@ export default {
 <style lang="scss">
 a {
   text-decoration: none;
+}
+body {
+  background-color: black;
 }
 </style>

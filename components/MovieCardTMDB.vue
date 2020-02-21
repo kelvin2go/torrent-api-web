@@ -1,29 +1,24 @@
 
 <template>
   <v-card
-    class="mx-auto my-12"
-    max-width="374"
-    :style="index < 3 ? `margin-top: 0px !important;` : ''"
+    outlined
+    tile
+    max-width="342"
+    style="margin: auto;"
   >
     <v-hover v-slot:default="{ hover }">
       <v-img
         height="513"
         :src="movie.poster"
         max-height="513"
+        max-width="342"
       >
         <v-expand-transition>
           <div
             v-if="hover"
             style="margin-top: 54px; background-color:  hsla(0, 0%, 0%, 0.7);"
+            class="hover-content"
           >
-            <div class="my-4 subtitle-1">
-              <v-icon
-                small
-                flat
-                text
-              >access_time</v-icon> {{movie.popularity}} • {{movie.release_date}}<br />
-            </div>
-
             <div
               text-truncate
               style="height: 200px;overflow: hidden;"
@@ -33,6 +28,7 @@
 
       </v-img>
     </v-hover>
+
     <div class="floatTitle display-1 font-italic font-weight-light">
       <h1> #{{index+2}} </h1>
     </div>
@@ -54,7 +50,7 @@
           dense
           half-increments
           readonly
-          size="14"
+          size="18"
         ></v-rating>
 
         <div class="grey--text ml-4">{{movie.vote_average}} ({{movie.vote_count}})</div>
@@ -85,5 +81,11 @@ export default {
   background-color: hsla(0, 0%, 0%, 0.7);
   padding: 7px;
   // margin-top: 513px;
+}
+
+.mini {
+  .hover-content {
+    display: none;
+  }
 }
 </style>

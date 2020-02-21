@@ -14,11 +14,11 @@
         <v-col
           class="text-left"
           cols="12"
-          style="background-color: hsla(0, 0%, 0%, 0.4);padding-bottom: 100px"
+          style="padding-bottom: 100px;background-color:  hsla(0, 0%, 0%, 0.5);"
         >
           <nuxt-link
             class="white--text"
-            :to="`/movie/search/${movieCover.title}`"
+            :to="`/movie/search/${movieCover.cover.title}`"
           >
             <h1 class="display-1 font-weight-thin mb-4">{{movieCover.cover.title}} <span
                 color="white"
@@ -49,23 +49,34 @@
       column
       justify-center
       align-center
-      style="top: 0;position: absolute;margin-top: 58vw;background-color:  hsla(0, 0%, 0%, 0.7);"
+      style="top: 0;position: absolute;margin-top: 58vw;"
     >
 
       <v-flex xs12>
         <v-container fluid>
 
-          <v-row dense>
+          <v-row
+            align="center"
+            justify="center"
+            dense
+          >
             <v-col
               v-for="(movie, index) in movieCover.movies"
               :key="`movie-${movie.id}`"
-              :cols="4"
+              align-self="center"
             >
               <nuxt-link :to="`/movie/search/${movie.title}`">
-                <MovieCardTMDB
+                <MovieCardTMDBmini
+                  v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs "
                   :index="index"
                   :movie="movie"
                 />
+                <MovieCardTMDB
+                  :index="index"
+                  :movie="movie"
+                  v-else
+                />
+
               </nuxt-link>
 
             </v-col>
@@ -129,6 +140,7 @@
 
 <script>
 import MovieCardTMDB from '@/components/MovieCardTMDB'
+import MovieCardTMDBmini from '@/components/MovieCardTMDBmini'
 
 const API_URL = process.env.API_URL
 export default {
@@ -141,7 +153,8 @@ export default {
     }
   },
   components: {
-    MovieCardTMDB
+    MovieCardTMDB,
+    MovieCardTMDBmini
   },
   mounted () {
     this.getPopMovie()

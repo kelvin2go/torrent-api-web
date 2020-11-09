@@ -3,7 +3,7 @@ import colors from 'vuetify/es5/util/colors'
 const API_BASE_URL = process.env.API_URL || 'http://localhost:1337'
 console.log(API_BASE_URL)
 export default {
-  mode: 'spa',
+  ssr: false,
   /*
   ** Headers of the page
   */
@@ -37,6 +37,7 @@ export default {
   */
   router: { middleware: ['auth'] },
   plugins: [
+    '~/plugins/axios.js',
     '~/plugins/vuetify.js',
     // '~/plugins/vuemagnet.js'
     // '~/plugins/webtorrent.js',
@@ -105,7 +106,7 @@ export default {
   },
   env: {
     API_URL: API_BASE_URL || 'http://localhost:1337',
-    TMDB_IMG_BASE: process.env.TMDB_IMG_BASE || `https://image.tmdb.org/t/p/w500/`
+    TMDB_IMG_BASE: process.env.TMDB_IMG_BASE || `https://image.tmdb.org/t/p/`
   },
   /*
   ** Build configuration
@@ -124,7 +125,7 @@ export default {
     /*
     ** Run ESLint on save
     */
-    extend (config, { isDev }) {
+    extend(config, { isDev }) {
       config.target = 'web'
       config.node = {
         fs: 'empty'

@@ -1,15 +1,7 @@
 <template>
-  <v-layout
-    column
-    justify-sm-end
-    align-center
-  >
+  <v-layout column justify-sm-end align-center>
     <v-row no-gutters>
-      <v-flex
-        xs10
-        sm10
-        md6
-      >
+      <v-flex xs10 sm10 md6>
         <v-text-field
           v-model="form.keyword"
           label="search movie"
@@ -19,7 +11,6 @@
           append-icon="search"
           @click:append="search"
         ></v-text-field>
-
       </v-flex>
 
       <v-flex xs1>
@@ -30,64 +21,45 @@
           dense
         ></v-select>
       </v-flex>
-      <!-- <v-flex xs2>
+      <v-flex xs2>
         <v-select
-          v-model="form.provider"
+          v-model="form.providers"
           :items="providers"
           item-text="name"
           item-value="name"
-          :value="providers.length && providers[0].name"
+          multiple
           dense
         ></v-select>
-      </v-flex> -->
-      <!-- <v-flex xs1>
+      </v-flex>
+      <v-flex xs1>
         <v-btn @click="search">search</v-btn>
-      </v-flex> -->
+      </v-flex>
     </v-row>
     <v-row>
-      <v-flex
-        xs10
-        sm10
-        md4
-        v-if="movieInfo"
-      >
+      <v-flex xs10 sm10 md3 v-if="movieInfo">
         <MovieCard :movie="movieInfo.info" />
       </v-flex>
-      <v-flex
-        xs10
-        sm10
-        md8
-        v-if="movies"
-        style="padding-top:48px !important"
-      >
-
+      <v-flex xs10 sm10 md9 v-if="movies" style="padding-top: 48px !important">
         <v-data-table
           :headers="headers"
           :items="movies"
           hide-default-footer
           :loading="loading"
           class="elevation-1"
-          style="min-height:500px"
+          :items-per-page="parseInt(form.per_page)"
         >
-          <template v-slot:item.status="{item}">
+          <template v-slot:item.status="{ item }">
             <div class="floatbox">
-              {{item.status }} {{ item.status == 'downloading' ? `${item.percent}%` : '' }}
+              {{ item.status }}
+              {{ item.status == "downloading" ? `${item.percent}%` : "" }}
             </div>
           </template>
-          <template v-slot:item.actions="{item}">
+          <template v-slot:item.actions="{ item }">
             <div class="floatbox">
-              <v-btn
-                text
-                icon
-                @click="displayMagnet(item.magnet)"
-              >
+              <v-btn text icon @click="displayMagnet(item.magnet)">
                 <v-icon>museum</v-icon>
               </v-btn>
-              <v-btn
-                text
-                icon
-                @click="remoteDownload(item.magnet)"
-              >
+              <v-btn text icon @click="remoteDownload(item.magnet)">
                 <v-icon>cloud</v-icon>
               </v-btn>
             </div>
@@ -100,25 +72,26 @@
 </template>
 
 <script>
-import MovieCard from '@/components/MovieCard'
-import SocketStatus from 'nuxt-socket-io'
-const API_URL = process.env.API_URL
+import MovieCard from "@/components/movie/MovieCard";
+import SocketStatus from "nuxt-socket-io";
+const API_URL = process.env.API_URL;
 
 export default {
   components: {
     MovieCard,
-    SocketStatus
+    SocketStatus,
   },
-  name: 'movieIndex',
-  props: ['inKeyword'],
-  data () {
+  name: "movieIndex",
+  props: ["inKeyword"],
+  data() {
     return {
-      keyword: '',
+      keyword: "",
       providers: [],
-      per_page: ['1', '5', '10', '20'],
+      per_page: ["1", "5", "10", "20"],
       form: {
-        keyword: '',
-        per_page: '5',
+        providers: [],
+        keyword: "",
+        per_page: "5",
       },
       movies: null,
       active: null,
@@ -126,32 +99,31 @@ export default {
       loading: false,
       movieMP4: null,
       file: null,
-      providers: [],
       downloadedFile: {},
       headers: [
         {
-          text: 'Title',
-          align: 'left',
+          text: "Title",
+          align: "left",
           sortable: false,
-          value: 'title',
+          value: "title",
         },
         {
-          text: 'size',
-          align: 'left',
+          text: "size",
+          align: "left",
           sortable: false,
-          value: 'size',
+          value: "size",
         },
-        // {
-        //   text: 'Provider',
-        //   align: 'left',
-        //   sortable: false,
-        //   value: 'provider',
-        // },
         {
-          text: 'Time',
-          align: 'left',
+          text: "Provider",
+          align: "left",
           sortable: false,
-          value: 'time',
+          value: "provider",
+        },
+        {
+          text: "Time",
+          align: "left",
+          sortable: false,
+          value: "time",
         },
         // {
         //   text: 'Magnet',
@@ -160,17 +132,17 @@ export default {
         //   value: 'magnet',
         // },
         {
-          text: 'status',
-          align: 'left',
+          text: "status",
+          align: "left",
           sortable: false,
-          value: 'status',
+          value: "status",
         },
         {
-          text: '',
-          align: 'left',
+          text: "",
+          align: "left",
           sortable: false,
-          value: 'actions',
-        }
+          value: "actions",
+        },
       ],
       movieInfo: null,
       socket1: null,
@@ -178,124 +150,136 @@ export default {
       badStatus: {},
       myEmitErrors: null,
       timer: null,
-      lastTorrentId: null
+      lastTorrentId: null,
     };
   },
   computed: {
-    magnet () {
-      console.log(this.active, this.movies)
+    magnet() {
+      console.log(this.active, this.movies);
       if (this.active != null && this.movies && this.movies.length) {
-        return this.movies[this.active].magnet
+        return this.movies[this.active].magnet;
       }
-      return null
+      return null;
     },
-
   },
-  async mounted () {
+  async mounted() {
     if (this.inKeyword) {
-      this.form.keyword = this.inKeyword
-      this.search()
+      this.form.keyword = this.inKeyword;
+      this.search();
     }
-    // const { data } = await this.$axios.get(`${API_URL}/torrent/activeProviders`)
-    // this.providers = data
-    this.socket1 = this.$nuxtSocket({ // In our example above, since vuex opts are set for 'home', they will be used. (see computed props)
-      channel: '/hello',
-      name: 'connection',
+    const { data } = await this.$axios.get(
+      `${API_URL}/torrent/activeProviders`
+    );
+    this.providers = data;
+    this.socket1 = this.$nuxtSocket({
+      // In our example above, since vuex opts are set for 'home', they will be used. (see computed props)
+      channel: "/hello",
+      name: "connection",
       reconnection: false,
-      emitErrorsProp: 'myEmitErrors'
-    })
-    this.socket1.on('hello', (res) => console.log(res));
+      emitErrorsProp: "myEmitErrors",
+    });
+    this.socket1.on("hello", (res) => console.log(res));
   },
-  beforeDestroy () {
-    if (this.timer) window.clearInterval(this.timer)
+  beforeDestroy() {
+    if (this.timer) window.clearInterval(this.timer);
   },
   methods: {
-    async getTorrent () {
+    async getTorrent() {
       const params = {
         ...this.form,
-      }
-      const { data } = await this.$axios.get(`${API_URL}/torrent`, { params })
-      console.log(data)
+      };
+      const { data } = await this.$axios.get(`${API_URL}/torrent`, { params });
+      console.log(data);
 
-      this.searchResults = data
+      this.searchResults = data;
       if (data && data.torrent_count) {
-        this.movies = data.movies
+        this.movies = data.movies;
 
-        this.movies.map(x => {
-          if (this.lastTorrentId && x.magnet == this.lastTorrentId && x.status == 'done') {
-            window.clearInterval(this.timer)
-            this.timer = null
+        this.movies.map((x) => {
+          if (
+            this.lastTorrentId &&
+            x.magnet == this.lastTorrentId &&
+            x.status == "done"
+          ) {
+            window.clearInterval(this.timer);
+            this.timer = null;
           }
-        })
+        });
       }
     },
-    backgroundUpdate () {
+    backgroundUpdate() {
       if (!this.timer) {
-        this.timer = window.setInterval(async () => await this.getTorrent(), 5000)
+        this.timer = window.setInterval(
+          async () => await this.getTorrent(),
+          5000
+        );
       }
     },
-    getMessage () {
-      console.log('hello')
-      this.socket1.emit('movies', { id: 'helloid' }, (resp) => {
-        this.messageRxd = resp
-      }).on('hell', data => console.log(data))
+    getMessage() {
+      console.log("hello");
+      this.socket1
+        .emit("movies", { id: "helloid" }, (resp) => {
+          this.messageRxd = resp;
+        })
+        .on("hell", (data) => console.log(data));
     },
-    async remoteDownload (torrentId) {
-      this.loading = true
+    async remoteDownload(torrentId) {
+      this.loading = true;
       try {
-        this.lastTorrentId = torrentId
+        this.lastTorrentId = torrentId;
         const params = {
           torrentId,
-        }
-        const { data } = await this.$axios.post(`${API_URL}/torrent/download`, { params })
+        };
+        const { data } = await this.$axios.post(`${API_URL}/torrent/download`, {
+          params,
+        });
 
-        this.searchResults = data
+        this.searchResults = data;
         if (data && data.torrent_count) {
-          this.movies = data.movies
+          this.movies = data.movies;
         }
 
-        this.backgroundUpdate(torrentId)
-      }
-      catch (err) {
-        console.log(err)
+        this.backgroundUpdate(torrentId);
+      } catch (err) {
+        console.log(err);
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     },
 
-    clear () {
-      this.movies = []
-      this.movieInfo = null
+    clear() {
+      this.movies = [];
+      this.movieInfo = null;
     },
-    async search () {
-      this.loading = true
-      this.movies = []
-      this.movieInfo = null
+    async search() {
+      this.loading = true;
+      this.movies = [];
+      this.movieInfo = null;
       try {
         const params = {
           ...this.form,
-        }
+        };
 
-        const movieInfo = await this.$axios.get(`${API_URL}/movie`, { params })
-        console.log('movieInfo', movieInfo)
-        this.movieInfo = movieInfo.data
-        const { data } = await this.$axios.get(`${API_URL}/torrent`, { params })
-        console.log(data)
+        const movieInfo = await this.$axios.get(`${API_URL}/movie`, { params });
+        console.log("movieInfo", movieInfo);
+        this.movieInfo = movieInfo.data;
+        const { data } = await this.$axios.get(`${API_URL}/torrent`, {
+          params,
+        });
+        console.log(data);
 
-        this.searchResults = data
+        this.searchResults = data;
         if (data && data.torrent_count) {
-          this.movies = data.movies
+          this.movies = data.movies;
         }
-      }
-      catch (err) {
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       } finally {
-        this.loading = false
+        this.loading = false;
       }
-    }
-
+    },
   },
-}
+};
 </script>
 <style scoped lang="scss">
 .row {

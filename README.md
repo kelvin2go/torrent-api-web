@@ -2,6 +2,11 @@
 
 > web torrent player + search torrent
 
+
+![Alt text](/assets/screencap-index.png "Movie index")
+
+![Alt text](assets/screencap-movie-detail.png "Movie detail")
+
 ## Build Setup
 
 ``` bash

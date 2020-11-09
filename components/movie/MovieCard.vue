@@ -1,21 +1,12 @@
 
 <template>
-  <v-card
-    class="mx-auto my-12"
-    max-width="374"
-  >
-    <v-img
-      height="250"
-      :src="movie.Poster"
-    ></v-img>
+  <v-card class="mx-auto my-12" max-width="374">
+    <v-img :src="movie.Poster"></v-img>
 
-    <v-card-title>{{movie.Title}}</v-card-title>
+    <v-card-title>{{ movie.Title }}</v-card-title>
 
     <v-card-text>
-      <v-row
-        align="center"
-        class="mx-0"
-      >
+      <v-row align="center" class="mx-0">
         <v-rating
           :value="Number(movie.imdbRating / 2)"
           color="amber"
@@ -25,28 +16,21 @@
           size="14"
         ></v-rating>
 
-        <div class="grey--text ml-4">{{movie.imdbRating}} ({{movie.imdbVotes}})</div>
+        <div class="grey--text ml-4">
+          {{ movie.imdbRating }} ({{ movie.imdbVotes }})
+        </div>
       </v-row>
 
       <div class="my-4 subtitle-1">
-        <v-icon
-          small
-          flat
-          text
-        >access_time</v-icon> {{movie.Runtime}} • {{movie.Released}}<br />
-        <v-icon
-          small
-          flat
-          text
-        >category</v-icon> {{movie.Rated}} • {{movie.Genre}}<br />
-        <v-icon
-          small
-          flat
-          text
-        >category</v-icon> {{movie.Language}} • {{movie.Country}}<br />
+        <v-icon small flat text>access_time</v-icon> {{ movie.Runtime }} •
+        {{ movie.Released }}<br />
+        <v-icon small flat text>category</v-icon> {{ movie.Rated }} •
+        {{ movie.Genre }}<br />
+        <v-icon small flat text>category</v-icon> {{ movie.Language }} •
+        {{ movie.Country }}<br />
       </div>
 
-      <div>{{movie.Plot}}</div>
+      <div>{{ movie.Plot }}</div>
     </v-card-text>
 
     <v-divider class="mx-4"></v-divider>
@@ -81,13 +65,9 @@
 
 <script>
 export default {
-  props: ['movie'],
-  data: () => ({
+  props: ["movie"],
+  data: () => ({}),
 
-  }),
-
-  methods: {
-
-  },
-}
+  methods: {},
+};
 </script>

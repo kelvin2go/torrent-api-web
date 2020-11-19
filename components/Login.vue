@@ -40,7 +40,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <div v-else>{{ $auth.user.username }}</div>
+    <div v-else class="text-capitalize">{{ $auth.user.username }}</div>
   </div>
 </template>
 
@@ -83,11 +83,8 @@ export default {
       this.$refs.form.resetValidation();
     },
     login() {
-      this.loading = true;
       this.error = {};
       const that = this;
-
-      // const { data } = await this.$axios.post(`${API_URL}/auth/local`, this.form)
       this.$auth
         .loginWith("local", {
           data: this.form,
@@ -97,9 +94,6 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-        })
-        .finally(() => {
-          that.loading = false;
         });
     },
   },

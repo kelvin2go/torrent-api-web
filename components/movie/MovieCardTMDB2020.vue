@@ -8,6 +8,8 @@
         class="progress font-weight-bold font-italic"
         :value="movie.vote_average * 10"
         :color="colors(movie.vote_average * 10)"
+        :width="8"
+        :size="55"
         >{{ movie.vote_average * 10 }}</v-progress-circular
       >
 
@@ -25,7 +27,6 @@ export default {
   data: () => ({
     hover: false,
   }),
-
   methods: {
     colors: (value) => {
       return value <= 30 ? "pink" : value < 70 ? "amber" : "green";
@@ -45,8 +46,10 @@ export default {
   background-color: black;
   border-radius: 25px;
   position: absolute;
-  bottom: -12px;
+  bottom: -26px;
+  left: -1px;
 }
+
 .sbtitle {
   font-size: 15px;
 }

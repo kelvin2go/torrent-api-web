@@ -4,6 +4,19 @@
       <v-flex xs12>
         <v-container fluid>
           <h2>Lastest search</h2>
+          <v-row align="center" justify="center" dense
+            ><v-col>
+              <v-text-field
+                v-model="form.keyword"
+                label="search movie"
+                dense
+                solo
+                rounded
+                append-icon="search"
+                @click:append="search"
+              ></v-text-field>
+            </v-col>
+          </v-row>
           <v-row align="center" justify="center" dense>
             <v-chip
               class="ma-2 text-uppercase"
@@ -32,54 +45,10 @@
             </v-col>
           </v-row>
         </v-container>
-        <v-card>
-          <v-card-text>
-            <p>
-              Webtor is a torrent search for movie and cloud download on self
-              hosting server
-            </p>
-            <p>
-              <a href="./movie"> Start </a>
-            </p>
-            <br />
-            <p>
-              This project is based on: <br />
-              <a
-                href="https://github.com/JimmyLaurent/torrent-search-api"
-                target="_blank"
-              >
-                Torrent search api
-              </a>
-              <br />
-              <a
-                href="https://github.com/webtorrent/webtorrent"
-                target="_blank"
-              >
-                Web torrent </a
-              ><br /><br />
+      </v-flex>
 
-              API server: Strapi
-              <a
-                href="https://github.com/webtorrent/webtorrent"
-                target="_blank"
-              >
-                Strapi
-              </a>
-              <br />
-              Web view:
-              <a
-                href="https://github.com/kelvin2go/torrent-api-web"
-                target="_blank"
-              >
-                NuxtJS + vuejs
-              </a>
-            </p>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn color="primary" nuxt to="/movie"> Continue </v-btn>
-          </v-card-actions>
-        </v-card>
+      <v-flex>
+        <Intro />
       </v-flex>
     </v-layout>
   </div>
@@ -88,20 +57,26 @@
 <script>
 import MovieCardTMDB from "@/components/movie/MovieCardTMDB2020";
 import MovieCardTMDBmini from "@/components/movie/MovieCardTMDBmini";
+import Intro from "@/components/Intro";
 
 export default {
   auth: false,
   layout: "cover",
+  components: {
+    MovieCardTMDB,
+    MovieCardTMDBmini,
+    Intro,
+  },
   data() {
     return {
       popMovie: null,
       tmdbImageBase: process.env.TMDB_IMG_BASE,
+      form: {
+        keyword: "",
+      },
     };
   },
-  components: {
-    MovieCardTMDB,
-    MovieCardTMDBmini,
-  },
+
   mounted() {
     this.getPopMovie();
     this.getLastestMovie();
@@ -115,6 +90,9 @@ export default {
     },
   },
   methods: {
+    search() {
+      this.$router.push(`movie/search/${this.form.keyword}`);
+    },
     async getPopMovie() {
       try {
         this.$store.dispatch("movies/getPop");

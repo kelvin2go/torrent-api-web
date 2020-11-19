@@ -7,7 +7,7 @@
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer />
-      <v-list style="padding: 4px">
+      <v-list style="padding: 4px; background-color: #272727">
         <v-list-item>
           <v-list-item-action>
             <LOGIN />
@@ -19,7 +19,7 @@
       <nuxt />
     </v-main>
     <v-navigation-drawer :right="right" temporary fixed>
-      <v-list>
+      <v-list style="background-color: #272727">
         <v-list-item>
           <v-list-item-action>
             <LOGIN />
@@ -39,13 +39,6 @@ export default {
   data() {
     return {
       clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      breakpoint: this.$vuetify.breakpoint,
     };
   },
 };
